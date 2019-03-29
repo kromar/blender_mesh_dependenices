@@ -16,18 +16,11 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
-bl_info = {
-    "name": "Mesh Dependencies",
-    "author": "Daniel Grauer",
-    "version": (0, 1, 0),
-    "blender": (2, 7, 7),
-    "category": "Modifiers",
-    "location": "Properties > Modifiers > Mesh Dependencies",
-    "description": "shows dependencies (like modifier targets) from and to active object",
-    "warning": '',
-    "wiki_url": "",
-    "tracker_url": ""
-}
+import bpy
+from bpy.props import (StringProperty, BoolProperty, IntProperty, CollectionProperty)
+
+from bl_ui.properties_material import active_node_mat
+from .addon_updater import addon_udpater_ops
 
 if "bpy" in locals():
     import importlib
@@ -35,11 +28,17 @@ if "bpy" in locals():
 else:
     from . import ops
 
-import bpy
-from bpy.props import (StringProperty, BoolProperty, IntProperty, CollectionProperty)
-
-from bl_ui.properties_material import active_node_mat
-
+bl_info = {
+    "name": "Mesh Dependencies",
+    "author": "kromar",
+    "version": (1, 00, release),
+    "blender": (2, 7, 9),
+    "category": "Modifiers",
+    "location": "Properties > Modifiers > Mesh Dependencies",
+    "description": "shows dependencies (like modifier targets) from and to active object",
+    "wiki_url": "",
+    "tracker_url": ""
+}
 
 class TEST_PT_map_slot_settings( bpy.types.Panel ):
     bl_label = "Material Creation Helper"
