@@ -31,7 +31,7 @@ else:
 bl_info = {
     "name": "Mesh Dependencies",
     "author": "kromar",
-    "version": (1, 00, release),
+    "version": (1, 0, 0),
     "blender": (2, 7, 9),
     "category": "Modifiers",
     "location": "Properties > Modifiers > Mesh Dependencies",
@@ -39,6 +39,7 @@ bl_info = {
     "wiki_url": "",
     "tracker_url": ""
 }
+
 
 class TEST_PT_map_slot_settings( bpy.types.Panel ):
     bl_label = "Material Creation Helper"
