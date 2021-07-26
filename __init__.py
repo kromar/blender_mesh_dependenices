@@ -16,11 +16,19 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
-import bpy
-from bpy.props import (StringProperty, BoolProperty, IntProperty, CollectionProperty)
 
-from bl_ui.properties_material import active_node_mat
-from .addon_updater import addon_udpater_ops
+bl_info = {
+    "name": "Modifier Dependencies",
+    "description": "shows dependencies (like modifier targets) from and to active object",
+    "author": "Daniel Grauer",
+    "version": (1, 0, 0),
+    "blender": (2, 8, 3),
+    "category": "Modifiers",
+    "location": "Properties > Modifiers > Modifier Dependencies",
+    "wiki_url": "",
+    "tracker_url": ""
+}
+
 
 if "bpy" in locals():
     import importlib
@@ -28,24 +36,16 @@ if "bpy" in locals():
 else:
     from . import ops
 
-bl_info = {
-    "name": "Mesh Dependencies",
-    "author": "kromar",
-    "version": (1, 0, 0),
-    "blender": (2, 7, 9),
-    "category": "Modifiers",
-    "location": "Properties > Modifiers > Mesh Dependencies",
-    "description": "shows dependencies (like modifier targets) from and to active object",
-    "wiki_url": "",
-    "tracker_url": ""
-}
+import bpy
+from bpy.props import (StringProperty, BoolProperty, IntProperty, CollectionProperty)
+
 
 
 class TEST_PT_map_slot_settings( bpy.types.Panel ):
     bl_label = "Material Creation Helper"
     bl_space_type = "PROPERTIES"
     bl_region_type = "WINDOW"
-    bl_context = "material"
+    bl_context = "data"
 
     def draw(self, context):
         layout = self.layout
@@ -74,20 +74,14 @@ classes = {
 
 
 def register():
-    [bpy.utils.register_class(c) for c in classes]
-
+    for c in classes:
+        bpy.utils.register_class(c)
+    bpy.types.Scene.CONFIG_ModifierDependencies = bpy.props.PointerProperty(type=UIElements)
     bpy.types.Object.modifier_active_index = bpy.props.IntProperty(default=0)
-    bpy.types.Scene.CONFIG_MeshDep = bpy.props.PointerProperty(type=UIElements)
-
 
 
 def unregister():
+    for c in classes:
+        bpy.utils.unregister_class(c)
     del bpy.types.Object.modifier_active_index
-    if bpy.context.scene.get('CONFIG_MeshDep') is not None:
-        del bpy.context.scene['CONFIG_MeshDep']
-    try:
-        del bpy.types.Scene.CONFIG_MeshDep
-    except():
-        pass
-
-    [bpy.utils.unregister_class(c) for c in classes]
+    del bpy.types.Scene.CONFIG_ModifierDependencies

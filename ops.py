@@ -72,7 +72,7 @@ class MODIFIER_UL_listtype(UIList,Panel):
     def draw_item(self, context, layout, data, item, active_data, active_propname, index):
         modifier = item
         if self.layout_type in {'DEFAULT', 'COMPACT'}: 
-            config = bpy.context.scene.CONFIG_MeshDep    
+            config = bpy.context.scene.CONFIG_ModifierDependencies    
             ob = context.active_object   
             
             if not config.active_object_as_target:
@@ -140,14 +140,14 @@ class MODIFIER_UL_listtype(UIList,Panel):
 
    
 class OBJECT_PT_ModifierDependencies(Panel):
-    bl_label = "Modifier Connections"
+    bl_label = "Modifier Dependencies"
     bl_idname = "OBJECT_PT_ModifierDependencies"
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
-    bl_context = "modifier"
+    bl_context = "data"
 
     def draw(self, context):
-        config = bpy.context.scene.CONFIG_MeshDep 
+        config = bpy.context.scene.CONFIG_ModifierDependencies 
         scene = bpy.context.scene
         ob = context.object   
           
